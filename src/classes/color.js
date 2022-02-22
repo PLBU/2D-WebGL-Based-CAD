@@ -80,7 +80,6 @@ class Color {
   static flattenColors(colors) {
     let result = [];
 
-    console.log(colors)
     for (const color of colors) {
       result = [...result, color.r, color.g, color.b, color.a];
     }
