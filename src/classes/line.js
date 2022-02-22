@@ -31,7 +31,6 @@ class Line {
     enableAttrShader(webGL, shader, "vertexColor", 4);
 
     webGL.drawArrays(webGL.LINES, 0, 2);
-    webGL.drawArrays(webGL.LINES, 2, 2);
   }
 
   /**
