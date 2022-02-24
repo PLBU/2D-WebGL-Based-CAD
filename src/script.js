@@ -1,6 +1,7 @@
 const onLoad = () => {
   const canvas = document.getElementById("my_canvas");
   const gl = canvas.getContext("webgl");
+  const clearBtn = document.getElementById("clear_btn");
 
   if (gl === null) {
     alert(
@@ -11,8 +12,9 @@ const onLoad = () => {
 
   initCanvas(gl, canvas);
 
-  document.onmousemove = (e) => handleMouseMove(e, gl);
-  document.onmousedown = (e) => handleMouseDown(gl);
+  canvas.onmousemove = (e) => handleMouseMove(e, gl);
+  canvas.onmousedown = (e) => handleMouseDown(gl);
+  clearBtn.onclick = (e) => clearCanvas(e, gl);
 };
 
 window.onload = onLoad;
