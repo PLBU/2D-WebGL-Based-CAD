@@ -9,21 +9,31 @@ function handleMouseMove(event, webGL) {
     x: ((event.clientX - boundingClientRect.left) / webGL.canvas.width) * 2 - 1,
     y: -1 * (((event.clientY - boundingClientRect.top) / webGL.canvas.height) * 2 - 1),
   };
+
+  if (isDrawing) {
+    const lastCommitedVertex = commitedVertices[commitedVertices.length - 1];
+    const tempVertex = new Vertex(mousePosition.x, mousePosition.y);
+    const black = Color.createColorByName("black");
+    const tempLine = new Line([lastCommitedVertex, tempVertex], [black, black]);
+
+    drawTempCanvas(webGL, tempLine); 
+  }
 }
 
 function handleMouseDown(webGL) {
-  console.log(mousePosition);
   commitedVertices.push(new Vertex(mousePosition.x, mousePosition.y));
+
   if (!isDrawing) {
     isDrawing = true;
   } else {
-    console.log("autis");
     const black = Color.createColorByName("black");
-    const lineData = [new Line(commitedVertices, [black, black])];
-
-    drawCanvas(webGL, lineData, null, null, null);
+    
+    lines.push(new Line(commitedVertices, [black, black]));
+    
+    drawCanvas(webGL);
 
     commitedVertices = [];
+    temporaryVertex = null;
     isDrawing = false;
   }
 }
