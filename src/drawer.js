@@ -1,14 +1,11 @@
-var lines = [];
-var squares = [];
-var rectangles = [];
-var polygons = [];
+var shapes = [];
 
 const drawCanvas = (webGL) => {
   webGL.clear(webGL.COLOR_BUFFER_BIT);
   const shader = initShader(webGL);
 
-  for (const line of lines) {
-    line.render(webGL, shader);
+  for (const shape of shapes) {
+    shape.render(webGL, shader);
   }
 };
 
@@ -17,15 +14,12 @@ const drawTempCanvas = (webGL, tempShape) => {
   const shader = initShader(webGL);
 
   if (tempShape) tempShape.render(webGL, shader);
-}
+};
 
 const clearCanvas = (event, webGL) => {
   event.returnValue = false;
 
-  lines = [];
-  squares = [];
-  rectangles = [];
-  polygons = [];
+  shapes = [];
 
   webGL.clear(webGL.COLOR_BUFFER_BIT);
 };

@@ -24,7 +24,7 @@ class Rectangle {
     const v4 = new Vertex(x4, y4);
 
     this.vertices = [v1, v3, v4, v2, v3, v4];
-    this.color = color;
+    this.color = [color, color, color, color, color, color];
   }
 
   /**
@@ -43,10 +43,10 @@ class Rectangle {
     const colorBuffer = initBuffer(
       webGL,
       webGL.ARRAY_BUFFER,
-      new Float32Array(this.color)
+      new Float32Array(Color.flattenColors(this.color))
     );
     webGL.bindBuffer(webGL.ARRAY_BUFFER, colorBuffer);
-    enableAttrShader(webGL, shader, "vertexColor", 3);
+    enableAttrShader(webGL, shader, "vertexColor", 4);
 
     webGL.drawArrays(webGL.TRIANGLES, 0, 6);
   }

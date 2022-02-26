@@ -2,7 +2,34 @@ var mousePosition;
 var isDrawing = false;
 var commitedVertices = [];
 
-function handleMouseMove(event, webGL) {
+const getShapeToBeDrawn = (vertices) => {
+  var shape;
+  const shapeString = document.getElementById("shape_select").value;
+  const colorString = document.getElementById("color_select").value;
+  const sideString = document.getElementById("polygon_sides_select").value;
+  const canvas = document.getElementById("my_canvas");
+
+  const selectedColor = Color.createColorByName(colorString);
+
+  switch (shapeString) {
+    case "line":
+      shape = new Line(vertices, selectedColor);
+      break;
+    case "square":
+      shape = new Square(vertices, selectedColor, canvas.width / canvas.height);
+      break;
+    case "rectangle":
+      shape = new Rectangle(vertices, selectedColor);
+      break;
+    case "polygon":
+      shape = new Polygon(parseInt(sideString), vertices, selectedColor);
+      break;
+  }
+
+  return shape;
+}
+
+const handleMouseMove = (event, webGL) => {
   const boundingClientRect = event.target.getBoundingClientRect();
 
   mousePosition = {
@@ -13,27 +40,23 @@ function handleMouseMove(event, webGL) {
   if (isDrawing) {
     const lastCommitedVertex = commitedVertices[commitedVertices.length - 1];
     const tempVertex = new Vertex(mousePosition.x, mousePosition.y);
-    const black = Color.createColorByName("black");
-    const tempLine = new Line([lastCommitedVertex, tempVertex], [black, black]);
-
-    drawTempCanvas(webGL, tempLine); 
+    const tempShape = getShapeToBeDrawn([lastCommitedVertex, tempVertex])
+    
+    drawTempCanvas(webGL, tempShape); 
   }
 }
 
-function handleMouseDown(webGL) {
+const handleMouseDown = (webGL) => {
   commitedVertices.push(new Vertex(mousePosition.x, mousePosition.y));
 
   if (!isDrawing) {
     isDrawing = true;
   } else {
-    const black = Color.createColorByName("black");
-    
-    lines.push(new Line(commitedVertices, [black, black]));
+    shapes.push(getShapeToBeDrawn(commitedVertices));
     
     drawCanvas(webGL);
 
     commitedVertices = [];
-    temporaryVertex = null;
     isDrawing = false;
   }
 }

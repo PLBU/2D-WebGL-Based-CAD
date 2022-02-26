@@ -16,8 +16,38 @@
       height="640"
       id="my_canvas"
     ></canvas>
-    <div>
-      <button id="clear_btn">Clear Canvas</button>
+    <div style="display: flex; flex-direction: row; align-items: center; margin-top: 8px;">
+      <div style="margin-right: 8px;">Change Mode:</div>
+      <select id="mode_select" name="mode_select">
+        <option value="draw">draw</option>
+        <option value="change vertex">change vertex</option>
+        <option value="change color">change color</option>
+      </select>
+      <div style="margin-left: 24px; margin-right: 8px;">Shape:</div>
+      <select id="shape_select" name="shape_select">
+        <option value="line">line</option>
+        <option value="square">square</option>
+        <option value="rectangle">rectangle</option>
+        <option value="polygon">polygon</option>
+      </select>
+      <div style="margin-left: 24px; margin-right: 8px;">Color:</div>
+      <select id="color_select" name="color_select">
+        <option value="black">black</option>
+        <option value="white">white</option>
+        <option value="red">red</option>
+        <option value="green">green</option>
+        <option value="blue">blue</option>
+        <option value="cyan">cyan</option>
+        <option value="magenta">magenta</option>
+        <option value="yellow">yellow</option>
+      </select>
+      <div style="margin-left: 24px; margin-right: 8px;">Polygon Sides:</div>
+      <select id="polygon_sides_select" name="polygon_sides_select">
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
+      </select>
+      <button style="margin-left: 24px;" id="clear_btn">Clear Canvas</button>
     </div>
   </body>
   <script type="text/javascript" src="./classes/color.js" defer></script>

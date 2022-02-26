@@ -9,9 +9,9 @@ class Polygon {
   constructor(numOfSides, vertices, color) {
     const vi = vertices[0];
     const vj = vertices[1];
-    if (numOfSides == 3) { // triangle
-        const x1 = vi.x;
-        const y1 = vj.y;
+    if (numOfSides === 3) { // triangle
+      const x1 = vi.x;
+      const y1 = vj.y;
         
         const x2 = vj.x;
         const y2 = vj.y;
@@ -22,9 +22,9 @@ class Polygon {
         const v1 = new Vertex(x1, y1);
         const v2 = new Vertex(x2, y2);
         const v3 = new Vertex(x3, y3);
-
+        
         this.vertices = [v1, v2, v3];
-    } else if (numOfSides == 4) { // rectangle
+    } else if (numOfSides === 4) { // rectangle
         const x1 = vi.x;
         const y1 = vi.y;
     
@@ -43,9 +43,9 @@ class Polygon {
         const v4 = new Vertex(x4, y4);
     
         this.vertices = [v1, v3, v2, v4];
-    } else if (numOfSides == 5) { 
+    } else if (numOfSides === 5) { 
         // pentagon
-    } else if (numOfSides == 6) { // hexagon
+    } else if (numOfSides === 6) { // hexagon
         const xi = vi.x;
         const yi = vi.y;
         const xj = vj.x;
@@ -82,7 +82,9 @@ class Polygon {
         this.vertices = [v1, v2, v3, v4, v5, v6];
     } // itu aja dulu(?)
 
-    this.color = color;
+    this.color = [];
+    for (var i = 0; i < numOfSides; i++) this.color.push(color);
+    this.numOfSides = numOfSides;
   }
 
   /**
@@ -101,21 +103,21 @@ class Polygon {
     const colorBuffer = initBuffer(
       webGL,
       webGL.ARRAY_BUFFER,
-      new Float32Array(this.color)
+      new Float32Array(Color.flattenColors(this.color))
     );
     webGL.bindBuffer(webGL.ARRAY_BUFFER, colorBuffer);
-    enableAttrShader(webGL, shader, "vertexColor", 3);
+    enableAttrShader(webGL, shader, "vertexColor", 4);
 
     webGL.drawArrays(webGL.TRIANGLE_FAN, 0, this.numOfSides);
   }
 
-  // /**
-  //  * Change the position of the Line's index-th dot
-  //  * @param {number} index
-  //  * @param {number} x
-  //  * @param {number} y
-  //  */
-  // changeDotPosByIndex(index, x, y) {
-  //   this.vertices[index].changePos(x, y);
-  // }
+  /**
+   * Change the position of the Polygon's dot by checking its position
+   * @param {Vertex} oldVertex
+   * @param {Vertex} newVertex
+   */
+  changeDotPos(oldVertex, newVertex) {
+    // buat for this.vertices pake index, nanti dicek x sm y nya sama gk sama vertex lama, trus ganti jadi x dan y nya vertex baru 
+    this.vertices[index].changePos(newVertex.x, newVertex.y);
+  }
 }

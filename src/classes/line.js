@@ -2,11 +2,11 @@ class Line {
   /**
    * Create a Line Object
    * @param {Array<Vertex>[2]} vertices
-   * @param {Array<Color>[2]} colors
+   * @param {Color} color
    */
-  constructor(vertices, colors) {
+  constructor(vertices, color) {
     this.vertices = vertices;
-    this.colors = colors;
+    this.colors = [color, color];
   }
 
   /**
