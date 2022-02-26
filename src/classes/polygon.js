@@ -7,31 +7,29 @@ class Polygon {
    * @param {Color} color
    */
   constructor(numOfSides, vertices, color) {
+    const vi = vertices[0];
+    const vj = vertices[1];
     if (numOfSides == 3) { // triangle
-        const v1 = vertices[0];
-        const v2 = vertices[1];
-
-        const x1 = v1.x;
-        const y1 = v2.y;
+        const x1 = vi.x;
+        const y1 = vj.y;
         
-        const x2 = v2.x;
-        const y2 = v2.y;
+        const x2 = vj.x;
+        const y2 = vj.y;
 
         const x3 = (x1 + x2) / 2;
-        const y3 = v1.y;
+        const y3 = vi.y;
 
+        const v1 = new Vertex(x1, y1);
+        const v2 = new Vertex(x2, y2);
         const v3 = new Vertex(x3, y3);
 
         this.vertices = [v1, v2, v3];
     } else if (numOfSides == 4) { // rectangle
-        const v1 = vertices[0];
-        const v2 = vertices[1];
+        const x1 = vi.x;
+        const y1 = vi.y;
     
-        const x1 = v1.x;
-        const y1 = v1.y;
-    
-        const x2 = v2.x;
-        const y2 = v2.y;
+        const x2 = vj.x;
+        const y2 = vj.y;
     
         const x3 = x1;
         const y3 = y2;
@@ -39,14 +37,49 @@ class Polygon {
         const x4 = x2;
         const y4 = y1;
     
+        const v1 = new Vertex(x1, y1);
+        const v2 = new Vertex(x2, y2);
         const v3 = new Vertex(x3, y3);
         const v4 = new Vertex(x4, y4);
     
-        this.vertices = [v1, v3, v4, v2, v3, v4];
-    } else if (numOfSides == 5) {
-      // pentagon
-    } else if (numOfSides == 6) {
-      // hexagon
+        this.vertices = [v1, v3, v2, v4];
+    } else if (numOfSides == 5) { 
+        // pentagon
+    } else if (numOfSides == 6) { // hexagon
+        const xi = vi.x;
+        const yi = vi.y;
+        const xj = vj.x;
+        const yj = vj.y;
+
+        const xmid = (xi + xj) / 2;
+        const ymid = (yi + yj) / 2;
+
+        const x1 = xmid / 2;
+        const y1 = yi;
+
+        const x2 = xi;
+        const y2 = ymid;
+
+        const x3 = x1;
+        const y3 = yj;
+
+        const x4 = xmid * 3 / 2;
+        const y4 = y3;
+
+        const x5 = xj;
+        const y5 = y2;
+
+        const x6 = x4;
+        const y6 = y1;
+
+        const v1 = new Vertex(x1, y1);
+        const v2 = new Vertex(x2, y2);
+        const v3 = new Vertex(x3, y3);
+        const v4 = new Vertex(x4, y4);
+        const v5 = new Vertex(x5, y5);
+        const v6 = new Vertex(x6, y6);
+
+        this.vertices = [v1, v2, v3, v4, v5, v6];
     } // itu aja dulu(?)
 
     this.color = color;
@@ -73,15 +106,7 @@ class Polygon {
     webGL.bindBuffer(webGL.ARRAY_BUFFER, colorBuffer);
     enableAttrShader(webGL, shader, "vertexColor", 3);
 
-    if (this.numOfSides == 3) {
-      webGL.drawArrays(webGL.TRIANGLES, 0, 3);
-    } else if (this.numOfSides == 4) {
-      webGL.drawArrays(webGL.TRIANGLES, 0, 6);
-    } else if (this.numOfSides == 5) {
-      webGL.drawArrays(webGL.TRIANGLES, 0, 9);
-    } else if (this.numOfSides == 6) {
-      webGL.drawArrays(webGL.TRIANGLES, 0, 12);
-    }
+    webGL.drawArrays(webGL.TRIANGLE_FAN, 0, this.numOfSides);
   }
 
   // /**
