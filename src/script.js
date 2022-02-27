@@ -3,7 +3,8 @@ const onLoad = () => {
   const gl = canvas.getContext("webgl");
   const clearBtn = document.getElementById("clear_btn");
   const saveBtn = document.getElementById("save_btn");
-  // const loadBtn = document.getElementById("load_btn");
+  const loadBtn = document.getElementById("load_btn");
+  var reader = new FileReader();
 
   if (gl === null) {
     alert(
@@ -18,7 +19,8 @@ const onLoad = () => {
   canvas.onmousedown = (e) => handleMouseDown(gl);
   clearBtn.onclick = (e) => clearCanvas(e, gl);
   saveBtn.onclick = (e) => saveCanvas();
-  // loadBtn.onclick = (e) => loadCanvas(e);
+  loadBtn.onchange = (e) => loadFile(e, reader);
+  reader.onload = (e) => loadReader(gl, reader);
 };
 
 window.onload = onLoad;
