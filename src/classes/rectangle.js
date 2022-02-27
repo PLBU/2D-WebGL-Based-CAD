@@ -8,11 +8,11 @@ class Rectangle {
     this.v1 = vertices[0];
     this.v2 = vertices[1];
 
-    const x1 = v1.x;
-    const y1 = v1.y;
+    const x1 = this.v1.x;
+    const y1 = this.v1.y;
 
-    const x2 = v2.x;
-    const y2 = v2.y;
+    const x2 = this.v2.x;
+    const y2 = this.v2.y;
 
     const x3 = x1;
     const y3 = y2;
@@ -53,15 +53,14 @@ class Rectangle {
 
   /**
    * Change and resize the position of the Recangle's corresponding corner
-   * @param {Vertex} vtx the closest vertex that is clicked
-   * @param {number} x
-   * @param {number} y
+   * @param {Vertex} oldVertex the closest vertex that is clicked
+   * @param {Vertex} newVertex the new vertex created on mouse click
    */
-  changeDotPosByVertex(vtx, x, y) {
+  changeVertexPos(oldVertex, newVertex) {
     // Move v1
-    if (vtx.isEqual(this.v1)) {
-      const x1 = x;
-      const y1 = y;
+    if (oldVertex.isEqual(this.v1)) {
+      const x1 = newVertex.x;
+      const y1 = newVertex.y;
 
       const x2 = this.v2.x;
       const y2 = this.v2.y;
@@ -81,12 +80,12 @@ class Rectangle {
     }
 
     // Move v2
-    if (vtx.isEqual(this.v2)) {
+    if (oldVertex.isEqual(this.v2)) {
       const x1 = this.v1.x;
       const y1 = this.v1.y;
 
-      const x2 = x;
-      const y2 = y;
+      const x2 = newVertex.x;
+      const y2 = newVertex.y;
 
       const x3 = x1;
       const y3 = y2;
@@ -103,9 +102,9 @@ class Rectangle {
     }
 
     // Move v3
-    if (vtx.isEqual(this.v3)) {
-      const x3 = x;
-      const y3 = y;
+    if (oldVertex.isEqual(this.v3)) {
+      const x3 = newVertex.x;
+      const y3 = newVertex.y;
 
       const x4 = this.v4.x;
       const y4 = this.v4.y;
@@ -125,12 +124,12 @@ class Rectangle {
     }
 
     // Move v4
-    if (vtx.isEqual(this.v4)) {
+    if (oldVertex.isEqual(this.v4)) {
       const x3 = this.v3.x;
       const y3 = this.v3.y;
 
-      const x4 = x;
-      const y4 = y;
+      const x4 = newVertex.x;
+      const y4 = newVertex.y;
 
       const x1 = x3;
       const y1 = y4;

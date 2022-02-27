@@ -63,15 +63,14 @@ class Square {
 
   /**
    * Change and resize the position of the Square's corresponding corner
-   * @param {Vertex} vtx the closest vertex that is clicked
-   * @param {number} x x position for cursor
-   * @param {number} y y position for cursor
+   * @param {Vertex} oldVertex the closest vertex that is clicked
+   * @param {Vertex} newVertex the new vertex created on mouse click
    */
-  changeDotPosByVertex(vtx, x, y) {
+  changeVertexPos(oldVertex, newVertex) {
     // Move v1
-    if (vtx.isEqual(this.v1)) {
-      let x1 = x;
-      let y1 = y;
+    if (oldVertex.isEqual(this.v1)) {
+      let x1 = newVertex.x;
+      let y1 = newVertex.y;
       const x2 = this.v2.x;
       const y2 = this.v2.y;
 
@@ -101,11 +100,11 @@ class Square {
     }
 
     // Move v2
-    if (vtx.isEqual(this.v2)) {
+    if (oldVertex.isEqual(this.v2)) {
       const x1 = this.v1.x;
       const y1 = this.v1.y;
-      let x2 = x;
-      let y2 = y;
+      let x2 = newVertex.x;
+      let y2 = newVertex.y;
 
       const shortestDistXY =
         Math.abs(x1 - x2) < Math.abs(y1 - y2)
@@ -133,9 +132,9 @@ class Square {
     }
 
     // Move v3
-    if (vtx.isEqual(this.v3)) {
-      let x3 = x;
-      let y3 = y;
+    if (oldVertex.isEqual(this.v3)) {
+      let x3 = newVertex.x;
+      let y3 = newVertex.y;
       const x4 = this.v4.x;
       const y4 = this.v4.y;
 
@@ -165,11 +164,11 @@ class Square {
     }
 
     // Move v4
-    if (vtx.isEqual(this.v4)) {
+    if (oldVertex.isEqual(this.v4)) {
       const x3 = this.v3.x;
       const y3 = this.v3.y;
-      let x4 = x;
-      let y4 = y;
+      let x4 = newVertex.x;
+      let y4 = newVertex.y;
 
       const shortestDistXY =
         Math.abs(x3 - x4) < Math.abs(y3 - y4)
