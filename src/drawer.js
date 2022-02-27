@@ -23,3 +23,26 @@ const clearCanvas = (event, webGL) => {
 
   webGL.clear(webGL.COLOR_BUFFER_BIT);
 };
+
+const saveCanvas = () => {
+  const canvasContent = JSON.stringify(shapes)
+  console.log(canvasContent)
+
+  var file = new Blob([canvasContent], {
+      type: 'application/json'
+  });
+
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(file);
+  a.download = 'canvas-' + getCurTime() + ".json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  // untuk format nama file
+  function getCurTime() {
+    var today = new Date;
+    var curTime = String(today.getFullYear()) + ("0" + today.getMonth()).slice(-2) + ("0" + today.getDate()).slice(-2) + ("0" + today.getHours()).slice(-2) + ("0" + today.getMinutes()).slice(-2) + ("0" + today.getSeconds()).slice(-2);
+    return curTime;
+  }
+}
