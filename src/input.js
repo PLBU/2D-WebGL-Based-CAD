@@ -118,6 +118,16 @@ const handleChangeVertexMode = (webGL) => {
   }
 };
 
+const handleChangeColorMode = (webGL) => {
+  const colorString = document.getElementById("color_select").value;
+  const selectedShape = getNearestShapeByPos(mousePosition.x, mousePosition.y);
+  const selectedColor = Color.createColorByName(colorString);
+
+  selectedShape.changeColor(selectedColor);
+
+  drawCanvas(webGL);
+}
+
 const handleMouseMove = (event, webGL) => {
   const boundingClientRect = event.target.getBoundingClientRect();
 
@@ -147,6 +157,9 @@ const handleMouseDown = (webGL) => {
       break;
     case "change_vertex":
       handleChangeVertexMode(webGL);
+      break;
+    case "change_color":
+      handleChangeColorMode(webGL);
       break;
     default:
       break;

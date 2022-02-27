@@ -45,4 +45,12 @@ class Line {
       }
     }
   }
+
+  /**
+   * Change the color of the Line
+   * @param {Color} color
+   */
+  changeColor(color) {
+    this.colors = [color, color];
+  }
 }

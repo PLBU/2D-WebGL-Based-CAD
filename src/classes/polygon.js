@@ -125,4 +125,13 @@ class Polygon {
     }
     this.vertices[index].changePos(newVertex.x, newVertex.y);
   }
+
+  /**
+   * Change the color of the Polygon
+   * @param {Color} color
+   */
+  changeColor(color) {
+    this.color = [];
+    for (var i = 0; i < this.numOfSides; i++) this.color.push(color);
+  }
 }

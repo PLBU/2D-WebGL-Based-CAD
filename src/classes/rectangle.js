@@ -145,4 +145,12 @@ class Rectangle {
       return;
     }
   }
+
+  /**
+   * Change the color of the Rectangle
+   * @param {Color} color
+   */
+  changeColor(color) {
+    this.color = [color, color, color, color, color, color];
+  }
 }
