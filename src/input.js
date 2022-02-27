@@ -70,6 +70,22 @@ const getNearestShapeByPos = (x, y) => {
 };
 
 const getDifferentVertexFromShape = (shape, v) => {
+  if (shape instanceof Rectangle || shape instanceof Square) {
+    switch (true) {
+      case shape.v1.isEqual(v):
+        return shape.v2;
+      case shape.v2.isEqual(v):
+        return shape.v1;
+      case shape.v3.isEqual(v):
+        return shape.v4;
+      case shape.v4.isEqual(v):
+        return shape.v3;
+
+      default:
+        break;
+    }
+  }
+
   for (const vertex of shape.vertices) {
     if (!vertex.isEqual(v)) return vertex;
   }
@@ -106,7 +122,7 @@ const handleChangeVertexMode = (webGL) => {
   } else {
     const newVertex = new Vertex(mousePosition.x, mousePosition.y);
 
-    selectedShape.changeVertexPos(selectedVertex, newVertex)
+    selectedShape.changeVertexPos(selectedVertex, newVertex);
     shapes.push(selectedShape);
 
     drawCanvas(webGL);

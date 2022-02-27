@@ -88,7 +88,7 @@ class Square {
       const x4 = x2;
       const y4 = y1;
 
-      const offset = y2 * (ratio - 1);
+      const offset = y2 * (this.ratio - 1);
 
       this.v1 = new Vertex(x1, y1 * this.ratio - offset);
       this.v2 = new Vertex(x2, y2 * this.ratio - offset);
@@ -120,7 +120,7 @@ class Square {
       const x4 = x2;
       const y4 = y1;
 
-      const offset = y1 * (ratio - 1);
+      const offset = y1 * (this.ratio - 1);
 
       this.v1 = new Vertex(x1, y1 * this.ratio - offset);
       this.v2 = new Vertex(x2, y2 * this.ratio - offset);
@@ -152,7 +152,7 @@ class Square {
       const x2 = x4;
       const y2 = y3;
 
-      const offset = y4 * (ratio - 1);
+      const offset = y4 * (this.ratio - 1);
 
       this.v1 = new Vertex(x1, y1 * this.ratio - offset);
       this.v2 = new Vertex(x2, y2 * this.ratio - offset);
@@ -175,8 +175,8 @@ class Square {
           ? Math.abs(x3 - x4)
           : Math.abs(y3 - y4);
 
-      x3 = x3 > x4 ? x3 - shortestDistXY : x3 + shortestDistXY;
-      y3 = y3 > y4 ? y3 - shortestDistXY : y3 + shortestDistXY;
+      x4 = x3 > x4 ? x3 - shortestDistXY : x3 + shortestDistXY;
+      y4 = y3 > y4 ? y3 - shortestDistXY : y3 + shortestDistXY;
 
       const x1 = x3;
       const y1 = y4;
@@ -184,7 +184,7 @@ class Square {
       const x2 = x4;
       const y2 = y3;
 
-      const offset = y3 * (ratio - 1);
+      const offset = y3 * (this.ratio - 1);
 
       this.v1 = new Vertex(x1, y1 * this.ratio - offset);
       this.v2 = new Vertex(x2, y2 * this.ratio - offset);
