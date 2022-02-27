@@ -9,15 +9,20 @@ class Polygon {
     const vi = vertices[0];
     const vj = vertices[1];
 
+    const xi = vi.x;
+    const yi = vi.y;
+    const xj = vj.x;
+    const yj = vj.y;
+
     if (numOfSides === 3) { // triangle
-        const x1 = vi.x;
-        const y1 = vj.y;
+        const x1 = xi;
+        const y1 = yj;
         
-        const x2 = vj.x;
-        const y2 = vj.y;
+        const x2 = xj;
+        const y2 = yj;
 
         const x3 = (x1 + x2) / 2;
-        const y3 = vi.y;
+        const y3 = yi;
 
         const v1 = new Vertex(x1, y1);
         const v2 = new Vertex(x2, y2);
@@ -25,32 +30,48 @@ class Polygon {
         
         this.vertices = [v1, v2, v3];
     } else if (numOfSides === 4) { // rectangle
-        const x1 = vi.x;
-        const y1 = vi.y;
+        const x1 = xi;
+        const y1 = yi;
     
-        const x2 = vj.x;
-        const y2 = vj.y;
+        const x2 = xi;
+        const y2 = yj;
     
-        const x3 = x1;
-        const y3 = y2;
+        const x3 = xj;
+        const y3 = yj;
     
-        const x4 = x2;
-        const y4 = y1;
+        const x4 = xj;
+        const y4 = yi;
     
         const v1 = new Vertex(x1, y1);
         const v2 = new Vertex(x2, y2);
         const v3 = new Vertex(x3, y3);
         const v4 = new Vertex(x4, y4);
     
-        this.vertices = [v1, v3, v2, v4];
-    } else if (numOfSides === 5) { 
-        // pentagon
-    } else if (numOfSides === 6) { // hexagon
-        const xi = vi.x;
-        const yi = vi.y;
-        const xj = vj.x; 
-        const yj = vj.y;
+        this.vertices = [v1, v2, v3, v4];
+    } else if (numOfSides === 5) { // pentagon
+        const x1 = (xi + xj) / 2;
+        const y1 = yi;
 
+        const x2 = xi;
+        const y2 = 0.4 * (yj - yi) + yi;
+
+        const x3 = 0.2 * (xj - xi) + xi;
+        const y3 = yj;
+
+        const x4 = 0.8 * (xj - xi) + xi;
+        const y4 = yj;
+
+        const x5 = xj;
+        const y5 = y2;
+
+        const v1 = new Vertex(x1, y1);
+        const v2 = new Vertex(x2, y2);
+        const v3 = new Vertex(x3, y3);
+        const v4 = new Vertex(x4, y4);
+        const v5 = new Vertex(x5, y5);
+
+        this.vertices = [v1, v2, v3, v4, v5];
+    } else if (numOfSides === 6) { // hexagon
         const xmid = (xi + xj) / 2;
         const ymid = (yi + yj) / 2;
 
