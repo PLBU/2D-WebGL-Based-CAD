@@ -13,19 +13,42 @@ const getShapeToBeDrawn = (vertices) => {
 
   const selectedColor = Color.createColorByName(colorString);
 
-  switch (shapeString) {
-    case "line":
-      shape = new Line(vertices, selectedColor);
-      break;
-    case "square":
-      shape = new Square(vertices, selectedColor, canvas.width / canvas.height);
-      break;
-    case "rectangle":
-      shape = new Rectangle(vertices, selectedColor);
-      break;
-    case "polygon":
-      shape = new Polygon(parseInt(sideString), vertices, selectedColor);
-      break;
+  if (selectedShape) {
+    switch (selectedShape.constructor.name) {
+      case "Line":
+        shape = new Line(vertices, selectedShape.color[0]);
+        break;
+      case "Square":
+        shape = new Square(vertices, selectedShape.color[0]);
+        break;
+      case "Rectangle":
+        shape = new Rectangle(vertices, selectedShape.color[0]);
+        break;
+      case "Polygon":
+        shape = new Polygon(vertices, selectedShape.color[0]);
+        break;
+      default:
+        break;
+    }
+  } else {
+    switch (shapeString) {
+      case "line":
+        shape = new Line(vertices, selectedColor);
+        break;
+      case "square":
+        shape = new Square(
+          vertices,
+          selectedColor,
+          canvas.width / canvas.height
+        );
+        break;
+      case "rectangle":
+        shape = new Rectangle(vertices, selectedColor);
+        break;
+      case "polygon":
+        shape = new Polygon(parseInt(sideString), vertices, selectedColor);
+        break;
+    }
   }
 
   return shape;
@@ -142,7 +165,7 @@ const handleChangeColorMode = (webGL) => {
   selectedShape.changeColor(selectedColor);
 
   drawCanvas(webGL);
-}
+};
 
 const handleMouseMove = (event, webGL) => {
   const boundingClientRect = event.target.getBoundingClientRect();

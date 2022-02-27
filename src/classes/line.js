@@ -6,7 +6,7 @@ class Line {
    */
   constructor(vertices, color) {
     this.vertices = vertices;
-    this.colors = [color, color];
+    this.color = [color, color];
   }
 
   /**
@@ -25,7 +25,7 @@ class Line {
     const colorBuffer = initBuffer(
       webGL,
       webGL.ARRAY_BUFFER,
-      new Float32Array(Color.flattenColors(this.colors))
+      new Float32Array(Color.flattenColors(this.color))
     );
     webGL.bindBuffer(webGL.ARRAY_BUFFER, colorBuffer);
     enableAttrShader(webGL, shader, "vertexColor", 4);
@@ -51,6 +51,6 @@ class Line {
    * @param {Color} color
    */
   changeColor(color) {
-    this.colors = [color, color];
+    this.color = [color, color];
   }
 }
