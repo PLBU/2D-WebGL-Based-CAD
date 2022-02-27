@@ -46,3 +46,15 @@ const saveCanvas = () => {
     return curTime;
   }
 }
+
+const loadFile = (event, reader) => {
+  var file = event.target.files[0];
+  if (file) {
+    reader.readAsText(file)
+  }
+};
+
+const loadReader = (webGL, reader) => {
+  shapes = JSON.parse(reader.result);
+  console.log(shapes);
+}
