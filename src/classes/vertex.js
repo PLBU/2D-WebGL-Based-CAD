@@ -10,7 +10,7 @@ class Vertex {
   }
 
   /**
-   * Create a 1D Array flattened for WebGL 
+   * Create a 1D Array flattened for WebGL
    * @param {Array<Vertex>} vertices
    * @returns {Array<Number>}
    */
@@ -32,5 +32,14 @@ class Vertex {
   changePos(x, y) {
     this.x = x;
     this.y = y;
+  }
+
+  /**
+   * Compare vertex with other vertex
+   * @param {Vertex} vtx other vertex
+   * @returns Boolean
+   */
+  isEqual(vtx) {
+    return this.x === vtx.x && this.y === vtx.y;
   }
 }
