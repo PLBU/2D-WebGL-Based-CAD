@@ -137,14 +137,12 @@ class Polygon {
    * @param {Vertex} oldVertex
    * @param {Vertex} newVertex
    */
-  changeDotPos(oldVertex, newVertex) { 
-    var index = -1;
+  changeVertexPos(oldVertex, newVertex) { 
     for (let i = 0; i < this.numOfSides; i++) {
         if (this.vertices[i].isEqual(oldVertex)) {
-            index = i;
+          this.vertices[i].changePos(newVertex.x, newVertex.y);
         }
     }
-    this.vertices[index].changePos(newVertex.x, newVertex.y);
   }
 
   /**
