@@ -35,11 +35,14 @@ class Line {
 
   /**
    * Change the position of the Line's index-th dot
-   * @param {number} index
-   * @param {number} x
-   * @param {number} y
+   * @param {Vertex} oldVertex
+   * @param {Vertex} newVertex
    */
-  changeDotPosByIndex(index, x, y) {
-    this.vertices[index].changePos(x, y);
+  changeVertexPos(oldVertex, newVertex) {
+    for (var i = 0; i < this.vertices.length; i++) {
+      if (this.vertices[i].isEqual(oldVertex)) {
+        this.vertices[i].changePos(newVertex.x, newVertex.y);
+      }
+    }
   }
 }

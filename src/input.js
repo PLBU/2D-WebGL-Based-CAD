@@ -1,6 +1,8 @@
 var mousePosition;
 var isDrawing = false;
 var commitedVertices = [];
+var selectedVertex;
+var selectedShape;
 
 const getShapeToBeDrawn = (vertices) => {
   var shape;
@@ -27,36 +29,126 @@ const getShapeToBeDrawn = (vertices) => {
   }
 
   return shape;
-}
+};
 
-const handleMouseMove = (event, webGL) => {
-  const boundingClientRect = event.target.getBoundingClientRect();
+const getNearestVertexByPos = (x, y) => {
+  const testVertex = new Vertex(x, y);
 
-  mousePosition = {
-    x: ((event.clientX - boundingClientRect.left) / webGL.canvas.width) * 2 - 1,
-    y: -1 * (((event.clientY - boundingClientRect.top) / webGL.canvas.height) * 2 - 1),
-  };
+  var nearestVertex;
+  var nearestDist = Vertex.getEuclideanDist(shapes[0].vertices[0], testVertex);
+  for (const shape of shapes) {
+    for (const vertex of shape.vertices) {
+      var currDist = Vertex.getEuclideanDist(vertex, testVertex);
 
-  if (isDrawing) {
-    const lastCommitedVertex = commitedVertices[commitedVertices.length - 1];
-    const tempVertex = new Vertex(mousePosition.x, mousePosition.y);
-    const tempShape = getShapeToBeDrawn([lastCommitedVertex, tempVertex])
-    
-    drawTempCanvas(webGL, tempShape); 
+      if (currDist <= nearestDist) {
+        nearestDist = currDist;
+        nearestVertex = vertex;
+      }
+    }
   }
-}
 
-const handleMouseDown = (webGL) => {
+  return nearestVertex;
+};
+
+const getNearestShapeByPos = (x, y) => {
+  const testVertex = new Vertex(x, y);
+
+  var nearestShape;
+  var nearestDist = Vertex.getEuclideanDist(shapes[0].vertices[0], testVertex);
+  for (const shape of shapes) {
+    for (const vertex of shape.vertices) {
+      var currDist = Vertex.getEuclideanDist(vertex, testVertex);
+
+      if (currDist <= nearestDist) {
+        nearestDist = currDist;
+        nearestShape = shape;
+      }
+    }
+  }
+
+  return nearestShape;
+};
+
+const getDifferentVertexFromShape = (shape, v) => {
+  for (const vertex of shape.vertices) {
+    if (!vertex.isEqual(v)) return vertex;
+  }
+};
+
+const handleDrawMode = (webGL) => {
   commitedVertices.push(new Vertex(mousePosition.x, mousePosition.y));
 
   if (!isDrawing) {
     isDrawing = true;
   } else {
     shapes.push(getShapeToBeDrawn(commitedVertices));
-    
+
     drawCanvas(webGL);
 
     commitedVertices = [];
     isDrawing = false;
   }
-}
+};
+
+const handleChangeVertexMode = (webGL) => {
+  if (!isDrawing) {
+    selectedVertex = getNearestVertexByPos(mousePosition.x, mousePosition.y);
+    selectedShape = getNearestShapeByPos(mousePosition.x, mousePosition.y);
+
+    commitedVertices.push(
+      getDifferentVertexFromShape(selectedShape, selectedVertex)
+    );
+
+    // Remove the current shape
+    shapes = shapes.filter((shape) => shape !== selectedShape);
+
+    isDrawing = true;
+  } else {
+    const newVertex = new Vertex(mousePosition.x, mousePosition.y);
+
+    selectedShape.changeVertexPos(selectedVertex, newVertex)
+    shapes.push(selectedShape);
+
+    drawCanvas(webGL);
+
+    commitedVertices = [];
+    selectedShape = null;
+    selectedVertex = null;
+    isDrawing = false;
+  }
+};
+
+const handleMouseMove = (event, webGL) => {
+  const boundingClientRect = event.target.getBoundingClientRect();
+
+  mousePosition = {
+    x: ((event.clientX - boundingClientRect.left) / webGL.canvas.width) * 2 - 1,
+    y:
+      -1 *
+      (((event.clientY - boundingClientRect.top) / webGL.canvas.height) * 2 -
+        1),
+  };
+
+  if (isDrawing) {
+    const lastCommitedVertex = commitedVertices[commitedVertices.length - 1];
+    const tempVertex = new Vertex(mousePosition.x, mousePosition.y);
+    const tempShape = getShapeToBeDrawn([lastCommitedVertex, tempVertex]);
+
+    drawTempCanvas(webGL, tempShape);
+  }
+};
+
+const handleMouseDown = (webGL) => {
+  const modeString = document.getElementById("mode_select").value;
+
+  switch (modeString) {
+    case "draw":
+      handleDrawMode(webGL);
+      break;
+    case "change_vertex":
+      handleChangeVertexMode(webGL);
+      break;
+    default:
+      break;
+  }
+};

@@ -25,6 +25,19 @@ class Vertex {
   }
 
   /**
+   * Get the Euclidean Distance of 2 vertices
+   * @param {Vertex} v1
+   * @param {Vertex} v2
+   * @returns {Number}
+   */
+  static getEuclideanDist(v1, v2) {
+    var a = v1.x - v2.x;
+    var b = v1.y - v2.y;
+
+    return Math.hypot(a, b);
+  }
+
+  /**
    * Change a Vertex Object's position
    * @param {number} x
    * @param {number} y
