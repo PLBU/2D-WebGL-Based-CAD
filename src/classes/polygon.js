@@ -1,5 +1,4 @@
 class Polygon {
-
     /**
    * Create a Polygon Object
    * @param {Number} numOfSides
@@ -9,6 +8,7 @@ class Polygon {
   constructor(numOfSides, vertices, color) {
     const vi = vertices[0];
     const vj = vertices[1];
+
     if (numOfSides === 3) { // triangle
         const x1 = vi.x;
         const y1 = vj.y;
@@ -113,16 +113,16 @@ class Polygon {
 
   /**
    * Change the position of the Polygon's dot by checking its position
+   * @param {Vertex} oldVertex
    * @param {Vertex} newVertex
    */
-  changeDotPos(newVertex) { 
+  changeDotPos(oldVertex, newVertex) { 
     var index = -1;
     for (let i = 0; i < this.numOfSides; i++) {
-        if (this.vertices[i].isEqual(newVertex)) {
+        if (this.vertices[i].isEqual(oldVertex)) {
             index = i;
         }
     }
-    // buat for this.vertices pake index, nanti dicek x sm y nya sama gk sama vertex lama, trus ganti jadi x dan y nya vertex baru 
     this.vertices[index].changePos(newVertex.x, newVertex.y);
   }
 }
