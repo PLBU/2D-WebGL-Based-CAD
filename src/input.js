@@ -24,7 +24,7 @@ const getShapeToBeDrawn = (vertices) => {
       shape = new Rectangle(vertices, selectedColor);
       break;
     case "polygon":
-      shape = new Polygon(parseInt(sideString), vertices, selectedColor, canvas.width / canvas.height);
+      shape = new Polygon(parseInt(sideString), vertices, selectedColor);
       break;
   }
 
