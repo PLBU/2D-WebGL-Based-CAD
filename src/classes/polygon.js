@@ -10,8 +10,8 @@ class Polygon {
     const vi = vertices[0];
     const vj = vertices[1];
     if (numOfSides === 3) { // triangle
-      const x1 = vi.x;
-      const y1 = vj.y;
+        const x1 = vi.x;
+        const y1 = vj.y;
         
         const x2 = vj.x;
         const y2 = vj.y;
@@ -48,13 +48,13 @@ class Polygon {
     } else if (numOfSides === 6) { // hexagon
         const xi = vi.x;
         const yi = vi.y;
-        const xj = vj.x;
+        const xj = vj.x; 
         const yj = vj.y;
 
         const xmid = (xi + xj) / 2;
         const ymid = (yi + yj) / 2;
 
-        const x1 = xmid / 2;
+        const x1 = (xi + xmid) / 2;
         const y1 = yi;
 
         const x2 = xi;
@@ -63,7 +63,7 @@ class Polygon {
         const x3 = x1;
         const y3 = yj;
 
-        const x4 = xmid * 3 / 2;
+        const x4 = (xmid + xj) / 2;
         const y4 = y3;
 
         const x5 = xj;
@@ -113,10 +113,15 @@ class Polygon {
 
   /**
    * Change the position of the Polygon's dot by checking its position
-   * @param {Vertex} oldVertex
    * @param {Vertex} newVertex
    */
-  changeDotPos(oldVertex, newVertex) {
+  changeDotPos(newVertex) { 
+    var index = -1;
+    for (let i = 0; i < this.numOfSides; i++) {
+        if (this.vertices[i].isEqual(newVertex)) {
+            index = i;
+        }
+    }
     // buat for this.vertices pake index, nanti dicek x sm y nya sama gk sama vertex lama, trus ganti jadi x dan y nya vertex baru 
     this.vertices[index].changePos(newVertex.x, newVertex.y);
   }
