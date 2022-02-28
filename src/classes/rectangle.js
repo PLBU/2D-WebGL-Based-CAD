@@ -5,6 +5,7 @@ class Rectangle {
    * @param {Color} color
    */
   constructor(vertices, color) {
+    this.initialVertices = vertices;
     this.v1 = vertices[0];
     this.v2 = vertices[1];
 

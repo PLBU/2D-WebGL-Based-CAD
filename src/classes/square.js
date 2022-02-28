@@ -6,6 +6,7 @@ class Square {
    * @param {Number} ratio
    */
   constructor(vertices, color, ratio) {
+    this.initialVertices = vertices;
     const x1 = vertices[0].x;
     const y1 = vertices[0].y;
     let x2 = vertices[1].x;

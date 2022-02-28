@@ -9,14 +9,17 @@
       justify-content: center;
     "
   >
-    <h2>2D Web Based CAD</h2>
+    <div style="display: flex; flex-direction: row; height: 32px; align-items: center; margin-bottom: 12px;">
+      <h2>2D Web Based CAD</h2>
+      <button style="margin-left: 24px; padding: 4px;" id="help_btn">?</button>
+    </div>
     <canvas
       style="border: solid black 1px"
       width="1024"
       height="640"
       id="my_canvas"
     ></canvas>
-    <div style="display: flex; flex-direction: row; align-items: center; margin-top: 8px;">
+    <div style="display: flex; flex-direction: row; align-items: center; margin-top: 16px;">
       <div style="margin-right: 8px;">Change Mode:</div>
       <select id="mode_select" name="mode_select">
         <option value="draw">draw</option>

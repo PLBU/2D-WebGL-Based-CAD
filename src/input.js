@@ -188,7 +188,7 @@ const handleMouseMove = (event, webGL) => {
     var tempShape;
     if (selectedShape && selectedShape.constructor.name === "Polygon") {
       selectedShape.changeVertexPos(selectedVertex, tempVertex);
-      tempShape = new TempPolygon(selectedShape);
+      tempShape = new TempPolygon(selectedShape.vertices, selectedShape.color);
     } else tempShape = getShapeToBeDrawn([lastCommitedVertex, tempVertex]);
 
     drawTempCanvas(webGL, tempShape);

@@ -1,12 +1,12 @@
 class TempPolygon {
   /**
    * Create a Temporary Polygon Object
-   * @param {Polygon} polygon
+   * @param {Array<Vertex>} vertices
+   * @param {Array<Color>} colors
    */
-  constructor(polygon) {
-    this.vertices = polygon.vertices;
-    this.color = polygon.color;
-    this.numOfSides = polygon.numOfSides;
+  constructor(vertices, colors) {
+    this.vertices = vertices;
+    this.colors = colors;
   }
 
   /**
@@ -25,11 +25,11 @@ class TempPolygon {
     const colorBuffer = initBuffer(
       webGL,
       webGL.ARRAY_BUFFER,
-      new Float32Array(Color.flattenColors(this.color))
+      new Float32Array(Color.flattenColors(this.colors))
     );
     webGL.bindBuffer(webGL.ARRAY_BUFFER, colorBuffer);
     enableAttrShader(webGL, shader, "vertexColor", 4);
 
-    webGL.drawArrays(webGL.TRIANGLE_FAN, 0, this.numOfSides);
+    webGL.drawArrays(webGL.TRIANGLE_FAN, 0, this.vertices.length);
   }
 }

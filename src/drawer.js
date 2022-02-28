@@ -25,36 +25,87 @@ const clearCanvas = (event, webGL) => {
 };
 
 const saveCanvas = () => {
-  const canvasContent = JSON.stringify(shapes)
-  console.log(canvasContent)
+  function removeByIndex(str, index) {
+    return str.slice(0, index) + str.slice(index + 1);
+  }
+
+  var shapesToChange = [];
+  for (const shape of shapes) {
+    shape["type"] = shape.constructor.name;
+    shapesToChange.push(shape);
+  }
+
+  canvasContent = JSON.stringify(shapesToChange);
+  console.log(canvasContent);
 
   var file = new Blob([canvasContent], {
-      type: 'application/json'
+    type: "application/json",
   });
 
-  var a = document.createElement('a');
+  var a = document.createElement("a");
   a.href = URL.createObjectURL(file);
-  a.download = 'canvas-' + getCurTime() + ".json";
+  a.download = "canvas-" + getCurTime() + ".json";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
 
   // untuk format nama file
   function getCurTime() {
-    var today = new Date;
-    var curTime = String(today.getFullYear()) + ("0" + today.getMonth()).slice(-2) + ("0" + today.getDate()).slice(-2) + ("0" + today.getHours()).slice(-2) + ("0" + today.getMinutes()).slice(-2) + ("0" + today.getSeconds()).slice(-2);
+    var today = new Date();
+    var curTime =
+      String(today.getFullYear()) +
+      ("0" + today.getMonth()).slice(-2) +
+      ("0" + today.getDate()).slice(-2) +
+      ("0" + today.getHours()).slice(-2) +
+      ("0" + today.getMinutes()).slice(-2) +
+      ("0" + today.getSeconds()).slice(-2);
     return curTime;
   }
-}
+};
 
 const loadFile = (event, reader) => {
   var file = event.target.files[0];
   if (file) {
-    reader.readAsText(file)
+    reader.readAsText(file);
   }
 };
 
 const loadReader = (webGL, reader) => {
-  shapes = JSON.parse(reader.result);
-  console.log(shapes);
-}
+  const canvas = document.getElementById("my_canvas");
+  const jsonShapes = JSON.parse(reader.result);
+
+  shapes = [];
+
+  webGL.clear(webGL.COLOR_BUFFER_BIT);
+
+  console.log(jsonShapes);
+
+  for (const jsonShape of jsonShapes) {
+    var shape;
+    switch (jsonShape.type) {
+      case "Line":
+        shape = new Line(jsonShape.vertices, jsonShape.color[0]);
+        break;
+      case "Square":
+        shape = new Square(
+          jsonShape.initialVertices,
+          jsonShape.color[0],
+          jsonShape.ratio
+        );
+        break;
+      case "Rectangle":
+        shape = new Rectangle(jsonShape.initialVertices, jsonShape.color[0]);
+        break;
+      case "Polygon":
+        shape = new Polygon(jsonShape.numOfSides ,jsonShape.initialVertices, jsonShape.color[0]);
+        break;
+      default:
+        break;
+    }
+
+    console.log(shape);
+    shapes.push(shape);
+  }
+
+  drawCanvas(webGL);
+};

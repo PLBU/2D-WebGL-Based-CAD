@@ -6,6 +6,7 @@ class Polygon {
    * @param {Color} color
    */
   constructor(numOfSides, vertices, color) {
+    this.initialVertices = vertices;
     const vi = vertices[0];
     const vj = vertices[1];
 
