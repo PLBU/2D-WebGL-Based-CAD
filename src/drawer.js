@@ -36,7 +36,6 @@ const saveCanvas = () => {
   }
 
   canvasContent = JSON.stringify(shapesToChange);
-  console.log(canvasContent);
 
   var file = new Blob([canvasContent], {
     type: "application/json",
@@ -78,8 +77,6 @@ const loadReader = (webGL, reader) => {
 
   webGL.clear(webGL.COLOR_BUFFER_BIT);
 
-  console.log(jsonShapes);
-
   for (const jsonShape of jsonShapes) {
     var shape;
     switch (jsonShape.type) {
@@ -102,8 +99,6 @@ const loadReader = (webGL, reader) => {
       default:
         break;
     }
-
-    console.log(shape);
     shapes.push(shape);
   }
 
