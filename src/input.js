@@ -19,7 +19,11 @@ const getShapeToBeDrawn = (vertices) => {
         shape = new Line(vertices, selectedShape.color[0]);
         break;
       case "Square":
-        shape = new Square(vertices, selectedShape.color[0]);
+        shape = new Square(
+          vertices,
+          selectedShape.color[0],
+          canvas.width / canvas.height
+        );
         break;
       case "Rectangle":
         shape = new Rectangle(vertices, selectedShape.color[0]);
@@ -181,7 +185,11 @@ const handleMouseMove = (event, webGL) => {
   if (isDrawing) {
     const lastCommitedVertex = commitedVertices[commitedVertices.length - 1];
     const tempVertex = new Vertex(mousePosition.x, mousePosition.y);
-    const tempShape = getShapeToBeDrawn([lastCommitedVertex, tempVertex]);
+    var tempShape;
+    if (selectedShape && selectedShape.constructor.name === "Polygon") {
+      selectedShape.changeVertexPos(selectedVertex, tempVertex);
+      tempShape = new TempPolygon(selectedShape);
+    } else tempShape = getShapeToBeDrawn([lastCommitedVertex, tempVertex]);
 
     drawTempCanvas(webGL, tempShape);
   }
